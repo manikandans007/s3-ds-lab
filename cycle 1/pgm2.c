@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 
 int main()
@@ -20,7 +21,7 @@ int main()
             }
 
     int sum = 0;
-    float median = (float)(n % 2 == 0) ? (l[n / 2 - 1] + l[n / 2]) / 2.0 : l[n / 2];
+    float median = (float)(n % 2 == 0) ? ((l[n / 2 - 1] + l[n / 2]) / 2.0) :(float)(l[n/2]);
     int mode = l[0], count = 0, max_count = 0;
     for (int i = 0; i < n; i++)
     {
