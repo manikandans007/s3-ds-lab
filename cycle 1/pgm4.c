@@ -1,44 +1,43 @@
-#include <stdio.h>
-
+#include<stdio.h>
 int main()
 {
-    int n1, n2;
-    printf("Enter the number of elements in set 1: ");
-    scanf("%d", &n1);
-    int s1[n1];
-    printf("Enter the elements of set 1: ");
-    for (int i = 0; i < n1; i++)
-        scanf("%d", &s1[i]);
-    printf("Enter the number of elements in set 2: ");
-    scanf("%d", &n2);
-    int s2[n2];
-    printf("Enter the elements of set 2: ");
-    for (int i = 0; i < n2; i++)
-        scanf("%d", &s2[i]);
-
-    int n = (n1 > n2) ? n1 : n2;
-    int s[n];
-
-    int x = 0;
-    for (int i = 0; i < n1; i++)
-        for (int j = 0; j < n2; j++)
-            if (s1[i] == s2[j])
+    int a[100],b[100],c[100],n1,n2,n,k=0,i,j;
+    
+    // taking input of set A
+    
+    printf("Enter number of element of set A\n");
+    scanf("%d",&n1);
+    printf("Enter elements of set A\n");
+    for(i=0;i<n1;i++)
+      scanf("%d",&a[i]);
+      
+    // taking input set B
+    
+    printf("Enter number of element of set B\n");
+    scanf("%d",&n2);
+    printf("Enter elements of set B\n");
+    for( i=0;i<n2;i++)
+      scanf("%d",&b[i]);
+      
+    // Logic for intersection
+    
+    for( i=0;i<n1;i++)
+    {
+         for(j=0;j<n2;j++)
+         {
+            if(a[i]==b[j])
             {
-                int already_exists = 0;
-                for (int k = 0; k < n; k++)
-                    if (s[k] == s1[i])
-                        already_exists = 1;
-                if (!already_exists)
-                {
-                    s[x] = s1[i];
-                    x++;
-                }
+                c[k]=a[i];
+                k++;
             }
-
-    printf("Intersection is: ");
-    for (int i = 0; i < x; i++)
-        printf("%d ", s[i]);
-    printf("\n");
-
-    return 0;
+         }
+        
+    }
+    
+    // Printing the elements of intersection of set A and set B
+    printf("intersection of set A and set B is:-\n");
+    for(i=0;i<k;i++)
+      printf("%d ",c[i]);
+    
+    return 0; 
 }
