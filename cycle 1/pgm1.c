@@ -3,8 +3,9 @@
 
 void rotate(int a[], int n, int d, int cr)
 {
-	if (cr == 0)
-		return;
+	if (cr == 0){
+		printf("Enter a valid count");
+	}
 	int x, res[n];
 	switch (d)
 	{
@@ -35,7 +36,6 @@ int main()
 	int cr;
 	printf("Enter the number of elements: ");
 	scanf("%d", &n);
-	int a[n];
 	printf("Enter the elements: ");
 	for (int i = 0; i < n; i++)
 		scanf("%d", &a[i]);
