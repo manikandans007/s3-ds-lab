@@ -54,13 +54,13 @@ int main()
     }while(a!=4);
     return 0;
     }
-}
-   /* else if (s == 2)
+
+ else if (s == 2)
     {
          printf("--------choose opertion u want to perform in stack-2------");
         printf("\n---------------------------------------------------------");
         printf("\n\t1.push \n\t2.pop \n\t3.display \n\t4.exit");
-        
+        do{
     
             printf("\nenter your choice :");
             scanf("%d", &a);
@@ -93,6 +93,8 @@ int main()
             }
 
     
+    }while(a!=4);
+    return 0;
     }
     else if(s==3)
     {
@@ -101,7 +103,8 @@ int main()
     else{
         printf("enter correct value between 1-3");
     }
-}*/
+}
+
     
 void push()
 {
@@ -143,7 +146,7 @@ if(top>=0)
     }
 
 }
-/*
+
 void push1()
 {
     if (ntop >= n - 1)
