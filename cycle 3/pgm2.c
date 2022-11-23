@@ -1,137 +1,191 @@
 #include <stdio.h>
 #include <stdlib.h>
-int top=-1,size;
- typedef struct{
-    int key;
-}element;
-void getsize(element a[])
+int stack[100],a,n,x,m,top,ntop=0,s;
+void push(void);
+void pop(void);
+void display(void);
+void push1(void);
+void pop1(void);
+void display1(void);
+int main()
 {
-    printf("enter the size of array");
-    scanf("%d",&size);
-    int top2=size;
+    top = -1;
+    ntop = n - top;
+    printf("Enter the size of stack :");
+    scanf("%d", &n);
+    printf("choose the stack you want");
+    printf("\n\t1.stack-1 \n\t2.stack-2 \n\t3.exit");
+    scanf("%d", &s);
+    if (s == 1)
+    {
+        printf("--------choose opertion u want to perform in stack-1------");
+        printf("\n------------------------------------------");
+        printf("\n\t1.push \n\t2.pop \n\t3.display \n\t4.exit");
+        do{
+            printf("\nenter your choice :");
+            scanf("%d", &a);
+            switch (a)
+            {
+            case 1:
+            {
+                push();
+                break;
+            }
+            case 2:
+            {
+                pop();
+                break;
+            }
+            case 3:
+            {
+                display();
+                break;
+            }
+            case 4:
+            {
+                printf("Exit Status ");
+                break;
+            }
+            default:
+            {
+                printf("\nenter the valid number b/w 1-4 :");
+            }
+            }
+    }while(a!=4);
+    return 0;
+    }
 }
-void push1(element a[]){
-    int top2=size;
-    if(top== top2-1)
+   /* else if (s == 2)
     {
-        printf("overflow");
-        printf("\n");
+         printf("--------choose opertion u want to perform in stack-2------");
+        printf("\n---------------------------------------------------------");
+        printf("\n\t1.push \n\t2.pop \n\t3.display \n\t4.exit");
+        
+    
+            printf("\nenter your choice :");
+            scanf("%d", &a);
+            switch (a)
+            {
+            case 1:
+            {
+                push1();
+                break;
+            }
+            case 2:
+            {
+                pop1();
+                break;
+            }
+            case 3:
+            {
+                display1();
+                break;
+            }
+            case 4:
+            {
+                printf("Exit Status ");
+                break;
+            }
+            default:
+            {
+                printf("\nenter the valid number b/w 1-4 :");
+            }
+            }
+
+    
     }
-    else
+    else if(s==3)
     {
-        printf("enter the element");
-        scanf("%d",&a[top+1].key);
-        top++;
-        printf("\n");
-    }
-}
-void push2(element a[]){
-    int top2=size;
-    if(top== top2-1)
-    {
-        printf("overflow");
-        printf("\n");
-    }
-    else
-    {
-        printf("enter the element");
-        scanf("%d",&a[top2--].key);
-        top2--;
-        printf("\n");
-    }
-}
-void pop1(element a[]){
-    if(top==-1){
-        printf("underflow");
-        printf("\n");
+        
     }
     else{
-        printf("the popped element is %d",a[top].key);
-        printf("\n");
+        printf("enter correct value between 1-3");
+    }
+}*/
+    
+void push()
+{
+if(top>=n-1)
+{
+printf("stack is underflow");
+}
+else{
+printf("enter the element to be pushed :");
+scanf("%d",&x);
+top++;
+stack[top]=x;
+}
+}
+void pop(){
+if(top<=-1){
+printf("The  stack is underflow ");
+top--;
+}
+else
+{
+printf("\nThe popped elements is :%d",stack[top]);
+        top--;
+}
+}
+void display()
+{
+if(top>=0)
+	{
+   
+        printf("\n The elements in STACK \n");
+        for(int i=top; i>=0; i--)
+            printf("\n%d",stack[i]);
+        
+    }
+    else
+    {
+        printf("\n The STACK is empty");
+    }
+
+}
+/*
+void push1()
+{
+    if (ntop >= n - 1)
+    {
+        printf("stack is underflow");
+    }
+    else
+    {
+        printf("enter the element to be pushed :");
+        scanf("%d", &x);
+        ntop++;
+        stack[ntop] = x;
+    }
+}
+void pop1()
+{
+    if (ntop <= -1)
+    {
+        printf("The  stack is underflow ");
         top--;
     }
-}
-void pop2(element a[]){
-    int top2=size;
-    if(top==top2){
-        printf("underflow");
-        printf("\n");
-    }
-    else{
-        printf("the popped element is %d",a[top2].key);
-        printf("\n");
-        top2--;
-    }
-}
-void display1(element a[]){
-    int i;
-    printf("the elements of stack are \n");
-    for(i=top;i>0;i--)
+    else
     {
-        printf(" %d",a[i].key);
+        printf("\nThe popped elements is :%d", stack[ntop]);
+        ntop--;
     }
-    printf("\n");
 }
-void display2(element a[]){
-    int top2=size;
-    int i;
-    printf("the elements of stack-2 are \n");
-    for(i=top2;i<size;i++)
+void display1()
+{
+    if (ntop >= 0)
     {
-        printf("%d",a[i].key);
+
+        printf("\n The elements in STACK \n");
+        for (int i = ntop; i >= 0; i--)
+            printf("\n%d", stack[i]);
+    }
+    else
+    {
+        printf("\n The STACK is empty");
     }
 }
-void main(){
-    int ch,size,c,choice;
-    element a[100];
-    getsize(a);
-    printf("enter the choice \n1:stack-1 \n2:stack-2 \n3:stop\n");
-    scanf("%d",&choice);
-    if(choice==1){
-        while(1){
-            printf("enter the choice \n 1->push \n 2->pop \n 3->display  \n 4->end \n");
-            scanf("%d",&ch);
-            if(ch==1){
-                push1(a);
-            }
-            else if(ch==2){
-                pop1(a);
-            }
-            else if(ch==3){
-                display1(a);
-            }
-            else if(ch==4){
-                break;
-           }
-            else{
-                printf("invalid choice");
-           }
-       }
-   }
-   printf("enter the choice \n1:stack-1 \n2:stack-2 \n3:stop\n");
-   scanf("%d",&choice);
-    if(choice==2){
-       while(1){
-           printf("enter the choice \n 1->push \n 2->pop \n 3->display  \n 4->end \n");
-           scanf("%d",&c);
-            if(c==1){
-                push2(a);
-            }
-            else if(c==2){
-                pop2(a);
-            }
-            else if(c==3){
-                display2(a);
-            }
-            else if(c==4){
-                break;
-           }
-            else{
-                printf("invalid choice");
-           }
-       }
-   }
-   else if(choice==3){
-       exit(0);
-   }
-}
+*/
+
+
+
