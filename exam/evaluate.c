@@ -25,3 +25,5 @@ for(int i=0;i<size1;i++)
     printf("the sum of polynomial is %d ",result);
 
 }
+
+
