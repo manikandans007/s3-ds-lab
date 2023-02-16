@@ -1,174 +1,245 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct node {
+struct node
+{
     int data;
     struct node *leftchild;
     struct node *rightchild;
-};
+} node;
+
+struct node *root = NULL;
 
 typedef struct node Node;
-Node *root = NULL;
 
-void insert() {
-    Node *newnode = (Node *)malloc(sizeof(Node));
-    printf("Enter data: ");
+void insert()
+{
+    struct node *newnode;
+
+    newnode = (struct node *)malloc(sizeof(struct node));
+
+    printf("Enter data : ");
     scanf("%d", &newnode->data);
+
     newnode->leftchild = NULL;
     newnode->rightchild = NULL;
 
-    if (root == NULL) {
+    if (root == NULL)
         root = newnode;
-    } else {
-        Node *current = root;
-        Node *parent;
-
-        while (1) {
-            parent = current;
-            if (newnode->data < current->data) {
+    else
+    {
+        struct node *previous, *current;
+        current = root;
+        while (1)
+        {
+            if (newnode->data < current->data)
+            {
+                previous = current;
                 current = current->leftchild;
-                if (current == NULL) {
-                    parent->leftchild = newnode;
-                    return;
+                if (current == NULL)
+                {
+                    previous->leftchild = newnode;
+                    break;
                 }
-            } else if (newnode->data > current->data) {
+            }
+            else if (newnode->data >= current->data)
+            {
+                previous = current;
                 current = current->rightchild;
-                if (current == NULL) {
-                    parent->rightchild = newnode;
-                    return;
+                if (current == NULL)
+                {
+                    previous->rightchild = newnode;
+                    break;
                 }
-            } else {
-                printf("Invalid input\n");
-                free(newnode);
-                return;
+            }
+            else
+            {
+                printf("Invalid Input\n");
+                exit(0);
             }
         }
     }
 }
 
-void inorder(Node *ptr) {
-    if (ptr != NULL) {
+void search()
+{
+    int key, f = 0;
+    printf("Enter the key element to be searched : ");
+    scanf("%d", &key);
+    struct node *current = root;
+    while (current != NULL)
+    {
+        if (current->data == key)
+        {
+            f = 1;
+            break;
+        }
+
+        if (key < current->data)
+            current = current->leftchild;
+
+        else if (key > current->data)
+            current = current->rightchild;
+    }
+    if (f)
+        printf("Key Element Found !!!\n");
+    else
+        printf("Key Element NOT found !!!\n");
+}
+void inorder(struct node *ptr)
+{
+    if (ptr != NULL)
+    {
         inorder(ptr->leftchild);
-        printf("%d ", ptr->data);
+        printf(" %d\t", ptr->data);
         inorder(ptr->rightchild);
     }
 }
 
-void preorder(Node *ptr) {
-    if (ptr != NULL) {
-        printf("%d ", ptr->data);
+void preorder(struct node *ptr)
+{
+    if (ptr)
+    {
+        printf(" %d\t", ptr->data);
         preorder(ptr->leftchild);
         preorder(ptr->rightchild);
     }
 }
 
-void postorder(Node *ptr) {
-    if (ptr != NULL) {
+void postorder(struct node *ptr)
+{
+    if (ptr)
+    {
         postorder(ptr->leftchild);
         postorder(ptr->rightchild);
-        printf("%d ", ptr->data);
+        printf(" %d\t", ptr->data);
     }
 }
 
-Node *search(int data) {
-    Node *current = root;
-
-    while (current != NULL) {
-        if (data == current->data) {
-            return current;
-        } else if (data < current->data) {
-            current = current->leftchild;
-        } else {
-            current = current->rightchild;
-        }
-    }
-
-    return NULL;
-}
-
-Node *findMin(Node *ptr) {
-    while (ptr->leftchild != NULL) {
+struct node *ins(struct node *ptr)
+{
+    struct node *q = NULL;
+    while (ptr->leftchild != NULL)
+    {
+        q = ptr;
         ptr = ptr->leftchild;
     }
-
-    return ptr;
+    if (ptr->rightchild != NULL)
+        q->leftchild = ptr->rightchild;
+    else
+        q->leftchild = NULL;
+    return (ptr);
 }
 
-void delete(int data) {
-    Node *current = root;
-    Node *parent = NULL;
-    while (current != NULL) {
-        if (data == current->data) {
+void delete_node()
+{
+    printf("Enter node value to delete : ");
+    int d, f = 0;
+    scanf("%d", &d);
+
+    struct node *current = root;
+    struct node *ptr = NULL;
+
+    while (current != NULL)
+    {
+        if (current->data == d)
+        {
+            f = 1;
             break;
-        } else if (data < current->data) {
-            parent = current;
+        }
+
+        if (d < current->data)
+        {
+            ptr = current;
             current = current->leftchild;
-        } else {
-            parent = current;
+        }
+        else if (d > current->data)
+        {
+            ptr = current;
             current = current->rightchild;
         }
     }
 
-    if (current == NULL) {
-        printf("Element not found\n");
-        return;
-    }
-
-    // Case 1: Node has no children
-    if (current->leftchild == NULL && current->rightchild == NULL) {
-        if (parent == NULL) {
-            root = NULL;
-        } else if (current == parent->leftchild) {
-            parent->leftchild = NULL;
-        } else {
-            parent->rightchild = NULL;
+    if (f == 0)
+        printf("Element to delete NOT found !!!");
+    else
+    {
+        struct node *t = current;
+        if (t->leftchild == NULL && t->rightchild == NULL)
+        {
+            if (ptr->leftchild == t)
+                ptr->leftchild = NULL;
+            if (ptr->rightchild == t)
+                ptr->rightchild = NULL;
+        }
+        else if (t->leftchild == NULL)
+        {
+            if (ptr->leftchild == t)
+                ptr->leftchild = t->rightchild;
+            if (ptr->rightchild == t)
+                ptr->rightchild = t->rightchild;
         }
 
-        free(current);
-    }
-    // Case 2: Node has one child
-    else if (current->leftchild == NULL) {
-        if (parent == NULL) {
-            root = current->rightchild;
-        } else if (current == parent->leftchild) {
-            parent->leftchild = current->rightchild;
+        else if (t->rightchild == NULL)
+        {
+            if (ptr->leftchild == t)
+                ptr->leftchild = t->leftchild;
+            if (ptr->rightchild == t)
+                ptr->rightchild = t->leftchild;
+        }
+        else
+        {
+            struct node *in = t->rightchild;
+            if (in->leftchild == NULL)
+            {
+                t->data = in->data;
+                t->rightchild = in->rightchild;
+            }
+            else
+            {
+                in = ins(t->rightchild);
+                t->data = in->data;
+            }
         }
     }
 }
-void main(){
-int ch,data1,data2;
-printf("\n---- Menu ----");
-printf("\n1.Insert a new node");
-printf("\n2.Inorder Traversal");
-printf("\n3.Preorder Traversal");
-printf("\n4.Postorder Traversal"); 
-printf("\n5.Delete a node");
-printf("\n6.Search for an Element");
-printf("\n7.Exit\n");
-do{
-printf("\nEnter your choice : ");
-scanf("%d",&ch);
-switch(ch){
-case 1:insert();
-break;
-case 2:inorder(root);
-break;
-case 3:preorder(root);
-break;
-case 4:postorder(root);
-break;
-case 5:
-printf("enter the value you want to delete");
-scanf("%d",&data1);
-delete(data1);
 
-break;
-
-case 6:
-printf("enter the value you want to search");
-scanf("%d",&data2);
-search(data2);
-break;
-}
-}while(ch != 7);
+int main()
+{
+    int ch;
+    printf("1.Insert a new node\n");
+    printf("2.Inorder Traversal\n");
+    printf("3.Preorder Traversal\n");
+    printf("4.Postorder Traversal\n");
+    printf("5.Delete a node\n6.Search for an Element\n");
+    printf("7.Exit\n");
+    do
+    {
+        printf("\nEnter your choice : ");
+        scanf("%d", &ch);
+        switch (ch)
+        {
+        case 1:
+            insert();
+            break;
+        case 2:
+            printf("Inorder Traversal\n");
+            inorder(root);
+            break;
+        case 3:
+            printf("Preorder Traversal\n");
+            preorder(root);
+            break;
+        case 4:
+            printf("Postorder Traversal\n");
+            postorder(root);
+            break;
+        case 5:
+            delete_node();
+            break;
+        case 6:
+            search();
+            break;
+        }
+    } while (ch != 7);
 }
