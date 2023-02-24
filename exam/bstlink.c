@@ -1,196 +1,135 @@
-#include <stdio.h>
-#include <stdlib.h>
-struct node{
-int data;
-struct node *leftchild;
-struct node *rightchild;
-}node;
-struct node *root = NULL;
-typedef struct node Node;
-void insert(){
-struct node *newnode;
-newnode = (struct node *)malloc(sizeof(struct node));
-printf("Enter data : ");
-scanf("%d",&newnode->data);
-newnode->leftchild = NULL;
-newnode->rightchild = NULL;
-if(root == NULL)
-root = newnode;
-else{
-struct node *previous, *current;
-current = root;
-while(1){
-if(newnode->data < current->data){
-previous = current;
-current = current->leftchild;
-if(current == NULL){
-previous
-->leftchild = newnode;
-break;
-}
-}
-else if(newnode
-->data > current
-->data){
-previous = current;
-current = current
-->rightchild;
-if(current == NULL){
-previous
-->rightchild = newnode;
-break
-;
-}
-}
-else{
-printf("Invalid Input\n");
-exit(0);
-}
-}
-}
-}
-void search()
-{
-int key, f = 0;
-printf("Enter the key element to be searched : ");
-scanf("%d",&key);
-struct node *current = root;
-while(current != NULL){
-if(current
-->data == key){
-f = 1;
-break;
-}
-if(key < current->data)
-current = current->leftchild;
-else if(key > current->data)
-current = current->rightchild;
-}
-if(f)
-printf("Key Element Found !!!\n");
-else
-printf("Key Element NOT found !!!\n");
-}
-void inorder(struct node *ptr)
-{
-if(ptr != NULL){
-inorder(ptr
-->leftchild);
-printf(" %d\t",ptr->data);
-inorder(ptr->rightchild);
-}
+import java.io.*;
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
+import java.util.*;
+public class employee{
+    public static void main(String []args){
+        Scanner sc = new Scanner(System.in);
+        int ci1,ci2,ci3,uc1,uc2,uc3;
+        int tc1,tc2,tc3,avg=0;
+        int[] a = new int[10];
+         
+        System.out.println("----------Enter details we have---------");
+        
+            System.out.println("Enter the consumer id:");
+             ci1=sc.nextInt();
+            System.out.println("Enter the unit consumed :");
+             uc1=sc.nextInt();
+            
+             tc1=uc1*100;
+            System.out.println("Total amount per month:"+tc1);
+            sc.nextLine();
+            System.out.println("----------Enter details we have---------");
+        
+            System.out.println("Enter the consumer id:");
+             ci2=sc.nextInt();
+            System.out.println("Enter the unit consumed :");
+            uc2=sc.nextInt();
+            
+             tc2=uc2*100;
+            System.out.println("Total amount per month:"+tc2);
+            sc.nextLine();
+            System.out.println("----------Enter details we have---------");
+        
+            System.out.println("Enter the consumer id:");
+             ci3=sc.nextInt();
+            System.out.println("Enter the unit consumed :");
+             uc3=sc.nextInt();
+            
+             tc3=uc3*100;
+            System.out.println("Total amount per month:"+tc3);
+    
+            int max;
+            if((tc1>tc2)&&(tc1>tc3)){
+                 max = tc1;
+            }
+            else if((tc2>tc3)&&(tc2>tc1)){
+                 max=tc2;
+            }
+            else{
+                max=tc3;
+            }
+    for(int  i=0;i<3;i++){
+        try{
+FileOutputStream fo = new FileOutputStream("/home/mec/text.txt");
+String w1="Total amount:"+tc1;    
+byte b1[]=w1.getBytes();
+fo.write(b1);
+String w2="Total amount:"+tc2;    
+byte b2[]=w2.getBytes();
+fo.write(b2);
+String w3="Total amount:"+tc3;    
+byte b3[]=w3.getBytes();
+fo.write(b3);
+fo.close();
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            System.out.println("written sucesfull");
+        }
+    }
 
-}
-void preorder(struct node *ptr)
-{
-if(ptr){printf(" %d\t",ptr->data);
-preorder(ptr->leftchild);
-preorder(ptr->rightchild);
-}
-}void postorder(struct node *ptr)
-{
-if(ptr){
-postorder(ptr->leftchild);
-postorder(ptr->rightchild);
-printf(" %d\t",ptr->data);
-}
-}
-struct node *ins(struct node *ptr)
-{
-struct node *q = NULL;
-while(ptr->leftchild != NULL){
-q = ptr;
-ptr = ptr->leftchild;
-}
-if(ptr->rightchild != NULL)
-q->leftchild = ptr->rightchild;
-else
-q->leftchild = NULL;
-return(ptr);
-}
-void delete(){
-printf("Enter node value to delete : ");
-int d, f=0;
-scanf("%d",&d);
-struct node *current = root;
-struct node *ptr = NULL;
-while(current != NULL){
-if(current
-->data == d){
-f=1;
-break;
-}
-if(d < current->data)
-{
-ptr=current;
-current = current->leftchild;
-}
-else if(d>current->data)
-{
-ptr = current;
-current = current->rightchild;
-}
-}
-if(f == 0)
-printf("Element to delete NOT found !!!");
+        if(max==tc1){
+            
+            System.out.println("----employee with high consumption----");
+            System.out.println("cosumer id "+ci1);
+            System.out.println("unit cosumed:"+uc1);
+            System.out.println("Enter the 5 previous reading");
+            for(int i=1;i<=5;i++){
+                a[i]=sc.nextInt();
+                avg=avg+a[i]/5;
+            }
+            System.out.println("Average of the given employee"+avg);
+            if(avg>500){
+                System.out.println("Alert :You are on above limit");
+            }
+            else{
+                System.out.println("Alert :Under limit");
+            }
 
-else{
-struct node *t = current;
-if(t->leftchild == NULL && t->rightchild == NULL){
-if(ptr->leftchild == t)
-ptr->leftchild = NULL;
-if(ptr->rightchild == t)
-ptr->rightchild = NULL;
-}
-else if(t->leftchild == NULL){
-if(ptr->leftchild == t)
-ptr->leftchild = t->rightchild;
-if(ptr->rightchild == t)
-ptr->rightchild = t->rightchild;
-}
-else if(t->rightchild == NULL){
-if(ptr->leftchild == t)
-ptr->leftchild = t->leftchild;
-if(ptr->rightchild == t)
-ptr->rightchild = t->leftchild;
-}
-else{
-struct node *in = t->rightchild;
-if(in->leftchild == NULL){
-t->data = in->data;
-t->rightchild = in->rightchild;
-}
-else{
-in=ins(t->rightchild);
-t->data=in->data;
-}
-}
-}
-}
-void main(){
-int ch;
-printf("\n---- Menu ----\n1.Insert a new node\n2.Inorder Traversal\n3.Preorder Traversal\n4.Postorder Traversal\n5.Delete a node\n6.Search for an Element\n7.Exit\n");
-do{
-printf("\nEnter your choice : ");
-scanf("%d",&ch);
-switch(ch){
-case 1:insert();
-break;
-case 2:printf("Inorder Traversal\n");
-inorder(root);
-break;
-case 3:printf("Preorder Traversal\n");
-preorder(root);
-break;
+        }
+        else if(max==tc2){
+            
+            System.out.println("----employee with high consumption----");
+            System.out.println("cosumer id "+ci2);
+            System.out.println("unit cosumed:"+uc2);
+            System.out.println("Enter the 5 previous reading");
+            for(int i=1;i<=5;i++){
+                a[i]=sc.nextInt();
+                avg=avg+a[i]/5;
+            }
+            System.out.println("Average of the given employee"+avg);
+            if(avg>500){
+                System.out.println("Alert :Your are on above limit");
+            }
+            else{
+                System.out.println("Alert :under limit");
+            }
 
-case 4:printf("Postorder Traversal\n");
-postorder(root);
-break;
-case 5:delete();
-break;
-case 6:search();
-break;
-}
-}while(ch != 7);
+        }
+        else{
+            
+                System.out.println("----employee with high consumption----");
+                System.out.println("cosumer id "+ci3);
+                System.out.println("unit cosumed:"+uc3);
+                System.out.println("Enter the 5 previous reading");
+                for(int i=1;i<=5;i++){
+                    a[i]=sc.nextInt();
+                    avg=avg+a[i]/5;
+                }
+                System.out.println("Average of the given employee"+avg);
+                if(avg>500){
+                    System.out.println("Alert :Your are on above limit");
+                }
+                else{
+                    System.out.println("Alert :under limit");
+                }
+    
+            
+        }
+       
+    }
 }
 
